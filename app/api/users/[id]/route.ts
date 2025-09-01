@@ -2,11 +2,11 @@ import { db } from "@/lib/database";
 import bcrypt from "bcryptjs";
 import { NextRequest, NextResponse } from "next/server";
 
-
+// app/api/users/[id]/route.ts
 export async function PUT(request: NextRequest, { params }: { params: { id: string } }) {
   try {
-    const { id } = params; 
-    const updates = await request.json(); 
+    const { id } = params;  // id از params بگیرید
+    const updates = await request.json();  // فقط updates از body
 
     if (!id || !updates) {
       return NextResponse.json({ error: "ID and updates are required" }, { status: 400 });
@@ -14,7 +14,7 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
 
     console.log("Received update request:", { id, updates });
 
-   
+    // بقیه کد مانند قبل...
     const allowedUpdates = ['name', 'email', 'role', 'isActive', 'password'] as const;
     type AllowedUpdateKey = typeof allowedUpdates[number]
     const filteredUpdates: Partial<Record<AllowedUpdateKey, string | boolean>> = {};
@@ -44,7 +44,7 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
     return NextResponse.json({ error: "Internal server error" }, { status: 500 });
   }
 }
-
+// app/api/users/[id]/route.ts
 export async function DELETE(_request: NextRequest, { params }: { params: { id: string } }) {
   try {
     const { id } = params;
